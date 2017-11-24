@@ -80,6 +80,7 @@ export class CalendarPageComponent implements OnInit {
             newEventWeek.end.setHours(newEventWeek.end.getHours() - 1);
             newEventWeek.color = '#09b0a2';
             this.ucCalendar.fullCalendar('renderEvent', newEventWeek, true);
+            // this.eventService.addEvent();
           }
           this.flag = true;
         },
@@ -91,7 +92,6 @@ export class CalendarPageComponent implements OnInit {
   // Permet une action après un clic sur un event (ici ouvir la popup de suppression)
   eventClick(model: any) {
     this.displayEvent = model;
-    console.log(model);
     this.showConfirm();
   }
 
