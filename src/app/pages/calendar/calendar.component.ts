@@ -1,0 +1,123 @@
+import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {Options} from 'fullcalendar';
+import {EventService} from '../../services/event.service';
+import {EventModel} from '../../models/EventModel';
+import {CalendarComponent} from 'ng-fullcalendar';
+
+@Component({
+  selector: 'app-calendar',
+  templateUrl: './calendar.component.html',
+  styleUrls: ['./calendar.component.css'],
+  encapsulation: ViewEncapsulation.None
+})
+export class CalendarPageComponent implements OnInit {
+
+  calendarOptions: Options;
+  dayDate = new Date();
+  modal: boolean;
+  currentEvent: any;
+  flag = true; // Permet d'entrer dans le detail journée dans créer d'event sur la vue mois
+  displayEvent: any;
+  @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
+
+  constructor(protected eventService: EventService) {
+    // Reception des données existante par ce service
+  }
+
+  ngOnInit() {
+    this.eventService.getEvents().subscribe(data => {
+      this.calendarOptions = {
+        // Drag'n'drop & edition
+        editable: true,
+        selectLongPressDelay: 1,
+        eventLongPressDelay: 1,
+        longPressDelay: 1,
+        selectHelper: true,
+        selectable: true, // permet la creation d'event
+        themeSystem: 'bootstrap3', // pas de bootstrap 4
+        height: 'auto', // !important
+        // customButtons: { // Custom button
+        //   back: {
+        //     text: 'Retour',
+        //     click: () => this.ucCalendar.fullCalendar('changeView', 'month')
+        //   }
+        // },
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month agendaWeek'
+        },
+        defaultView: 'agendaWeek',
+        views: {
+          agendaWeek: {
+            eventLimit: 2,
+            titleFormat: 'MMMM YYYY'
+          },
+          day: {
+            titleFormat: 'MMMM YYYY'
+          }
+        },
+        // Active la vue "agenda day" après clic
+        // dayClick: (date, allDay, jsEvent, view) => {
+        //   if (allDay) {
+        //     this.flag = false;
+        //     this.dayDate = new Date(date._i);
+        //     // Clicked to the entire day
+        //     this.ucCalendar.fullCalendar('changeView', 'agendaDay'/* or 'basicDay' */);
+        //     this.ucCalendar.fullCalendar('gotoDate', this.dayDate.getFullYear(), this.dayDate.getMonth(), this.dayDate.getDate());
+        //   }
+        // },
+        select: (start, end, jsEvent, view) => {
+          if (this.flag && view.name === 'month') {
+            const newEventMonth = new EventModel('Souhait', new Date(start._i));
+            newEventMonth.end = new Date(end._i);
+            this.ucCalendar.fullCalendar('renderEvent', newEventMonth, true);
+          } else if (this.flag && view.name === 'agendaWeek') {
+            // const newEventWeek = new EventModel('Souhait', new Date(start._d));
+            // newEventWeek.end = new Date(end._d);
+            jsEvent.color = '#09b0a2';
+            // this.ucCalendar.fullCalendar('renderEvent', newEventWeek, true);
+          }
+          this.flag = true;
+        },
+        events: data,
+      };
+    });
+  }
+
+  // Permet une action apres un clic d'ouvir la popup de suppression
+  eventClick(model: any) {
+    this.modal = true;
+    this.currentEvent = model;
+  }
+
+  closeModal() {
+    this.modal = false;
+  }
+
+  // Permet la suppression d'un event après validation
+  deleteEvent() {
+    this.ucCalendar.fullCalendar('removeEvents', this.currentEvent.event._id);
+    //this.ucCalendar.fullCalendar('refetchEvents');
+  }
+
+  // clickButton(model: any) {
+  //   this.displayEvent = model;
+  // }
+
+  // updateEvent(model: any) {
+  //   model = {
+  //     event: {
+  //       id: model.event.id,
+  //       start: model.event.start,
+  //       end: model.event.end,
+  //       title: model.event.title
+  //       // other params
+  //     },
+  //     duration: {
+  //       _data: model.duration._data
+  //     }
+  //   };
+  //   this.displayEvent = model;
+  // }
+}
