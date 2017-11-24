@@ -1,30 +1,8 @@
 <app-header></app-header>
 
-<div *ngIf="modal" class="modal fade" role="dialog" ngStyle="dispay: block">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Êtes vous sure de vouloir supprimer cet événement ?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" (click)="deleteEvent()"></button>
-        <button type="button" class="btn btn-default" (click)="closeModal()">Annuler</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div *ngIf="calendarOptions">
   <ng-fullcalendar #ucCalendar
                    [options]="calendarOptions"
-                   (eventClick)="eventClick($event.detail)"
-                   (eventDrop)="updateEvent($event.detail)"
-                   (eventResize)="updateEvent($event.detail)"
-                   (clickButton)="clickButton($event.detail)">
+                   (eventClick)="eventClick($event.detail)">
   </ng-fullcalendar>
 </div>

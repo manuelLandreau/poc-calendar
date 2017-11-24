@@ -3241,6 +3241,10 @@ ng-fullcalendar@1.0.3:
     fullcalendar "^3.6.1"
     jquery "^3.2.1"
 
+ng2-bootstrap-modal@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ng2-bootstrap-modal/-/ng2-bootstrap-modal-1.0.1.tgz#f3166fca63fd3b3aeacb29b8d5e3b872ab6ab1e4"
+
 no-case@^2.2.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/no-case/-/no-case-2.3.2.tgz#60b813396be39b3f1288a4c1ed5d1e7d28b464ac"

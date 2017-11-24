@@ -3,6 +3,8 @@ import {Options} from 'fullcalendar';
 import {EventService} from '../../services/event.service';
 import {EventModel} from '../../models/EventModel';
 import {CalendarComponent} from 'ng-fullcalendar';
+import {DialogService} from "ng2-bootstrap-modal";
+import {ModalComponent} from "../../components/modal/modal.component";
 
 @Component({
   selector: 'app-calendar',
@@ -13,14 +15,11 @@ import {CalendarComponent} from 'ng-fullcalendar';
 export class CalendarPageComponent implements OnInit {
 
   calendarOptions: Options;
-  dayDate = new Date();
-  modal: boolean;
-  currentEvent: any;
   flag = true; // Permet d'entrer dans le detail journée dans créer d'event sur la vue mois
   displayEvent: any;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
 
-  constructor(protected eventService: EventService) {
+  constructor(protected eventService: EventService, private dialogService: DialogService) {
     // Reception des données existante par ce service
   }
 
@@ -32,7 +31,7 @@ export class CalendarPageComponent implements OnInit {
         selectLongPressDelay: 1,
         eventLongPressDelay: 1,
         longPressDelay: 1,
-        selectHelper: true,
+        // selectHelper: true,
         selectable: true, // permet la creation d'event
         themeSystem: 'bootstrap3', // pas de bootstrap 4
         height: 'auto', // !important
@@ -68,15 +67,19 @@ export class CalendarPageComponent implements OnInit {
         //   }
         // },
         select: (start, end, jsEvent, view) => {
-          if (this.flag && view.name === 'month') {
-            const newEventMonth = new EventModel('Souhait', new Date(start._i));
-            newEventMonth.end = new Date(end._i);
-            this.ucCalendar.fullCalendar('renderEvent', newEventMonth, true);
-          } else if (this.flag && view.name === 'agendaWeek') {
-            // const newEventWeek = new EventModel('Souhait', new Date(start._d));
-            // newEventWeek.end = new Date(end._d);
-            jsEvent.color = '#09b0a2';
-            // this.ucCalendar.fullCalendar('renderEvent', newEventWeek, true);
+          // if (this.flag && view.name === 'month') {
+          //   const newEventMonth = new EventModel('Souhait', new Date(start._i));
+          //   newEventMonth.end = new Date(end._i);
+          //   this.ucCalendar.fullCalendar('renderEvent', newEventMonth, true);
+          // } else
+          if (this.flag && view.name === 'agendaWeek') {
+            const newEventWeek = new EventModel('Souhait', new Date(start._d));
+            newEventWeek.end = new Date(end._d);
+            // heure - 1 parceque decalage ???
+            newEventWeek.start.setHours(newEventWeek.start.getHours() - 1);
+            newEventWeek.end.setHours(newEventWeek.end.getHours() - 1);
+            newEventWeek.color = '#09b0a2';
+            this.ucCalendar.fullCalendar('renderEvent', newEventWeek, true);
           }
           this.flag = true;
         },
@@ -87,24 +90,21 @@ export class CalendarPageComponent implements OnInit {
 
   // Permet une action apres un clic d'ouvir la popup de suppression
   eventClick(model: any) {
-    this.modal = true;
-    this.currentEvent = model;
-  }
-
-  closeModal() {
-    this.modal = false;
+    this.displayEvent = model;
+    console.log(model);
+    this.showConfirm();  // https://github.com/ankosoftware/ng2-bootstrap-modal
   }
 
   // Permet la suppression d'un event après validation
   deleteEvent() {
-    this.ucCalendar.fullCalendar('removeEvents', this.currentEvent.event._id);
-    //this.ucCalendar.fullCalendar('refetchEvents');
+    this.ucCalendar.fullCalendar('removeEvents', this.displayEvent.event._id);
+    this.ucCalendar.fullCalendar('refetchEvents');
   }
 
   // clickButton(model: any) {
   //   this.displayEvent = model;
   // }
-
+  //
   // updateEvent(model: any) {
   //   model = {
   //     event: {
@@ -120,4 +120,19 @@ export class CalendarPageComponent implements OnInit {
   //   };
   //   this.displayEvent = model;
   // }
+
+  showConfirm() {
+    let disposable = this.dialogService.addDialog(ModalComponent, {
+      title: 'Confirm title',
+      message: 'Confirm message'})
+      .subscribe(isConfirmed => {
+        // We get dialog result
+        if (isConfirmed) {
+          this.deleteEvent();
+        }
+      });
+    setTimeout(() => {
+      disposable.unsubscribe();
+    }, 10000);
+  }
 }
