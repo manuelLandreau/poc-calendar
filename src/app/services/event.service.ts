@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
-import {EventModel} from "../models/EventModel";
+import {EventModel} from '../models/EventModel';
 
 // Placer dans utils/dateUtils.ts par exemple
 // renommer

@@ -10,7 +10,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { CalendarPageComponent } from './pages/calendar/calendar.component';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
-import {ModalComponent} from "./components/modal/modal.component";
+import {ModalComponent} from './components/modal/modal.component';
 
 const appRoutes: Routes = [
   {

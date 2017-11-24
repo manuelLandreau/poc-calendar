@@ -3,8 +3,8 @@ import {Options} from 'fullcalendar';
 import {EventService} from '../../services/event.service';
 import {EventModel} from '../../models/EventModel';
 import {CalendarComponent} from 'ng-fullcalendar';
-import {DialogService} from "ng2-bootstrap-modal";
-import {ModalComponent} from "../../components/modal/modal.component";
+import {DialogService} from 'ng2-bootstrap-modal';
+import {ModalComponent} from '../../components/modal/modal.component';
 
 @Component({
   selector: 'app-calendar',
@@ -15,12 +15,12 @@ import {ModalComponent} from "../../components/modal/modal.component";
 export class CalendarPageComponent implements OnInit {
 
   calendarOptions: Options;
-  flag = true; // Permet d'entrer dans le detail journée dans créer d'event sur la vue mois
+  flag = true; // Permet d'entrer dans le detail journée sans créer d'event sur la vue mois
   displayEvent: any;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
 
   constructor(protected eventService: EventService, private dialogService: DialogService) {
-    // Reception des données existante par ce service
+    // Reception des données existante par ce service + service modal
   }
 
   ngOnInit() {
@@ -31,9 +31,8 @@ export class CalendarPageComponent implements OnInit {
         selectLongPressDelay: 1,
         eventLongPressDelay: 1,
         longPressDelay: 1,
-        // selectHelper: true,
         selectable: true, // permet la creation d'event
-        themeSystem: 'bootstrap3', // pas de bootstrap 4
+        themeSystem: 'bootstrap3', // pas de bootstrap 4 - choix: standard, bootstrap3, jquery-ui
         height: 'auto', // !important
         // customButtons: { // Custom button
         //   back: {
@@ -56,7 +55,7 @@ export class CalendarPageComponent implements OnInit {
             titleFormat: 'MMMM YYYY'
           }
         },
-        // Active la vue "agenda day" après clic
+        // Active la vue "agenda day" après clic (d'où l'attribut flag)
         // dayClick: (date, allDay, jsEvent, view) => {
         //   if (allDay) {
         //     this.flag = false;
@@ -67,12 +66,13 @@ export class CalendarPageComponent implements OnInit {
         //   }
         // },
         select: (start, end, jsEvent, view) => {
-          // if (this.flag && view.name === 'month') {
-          //   const newEventMonth = new EventModel('Souhait', new Date(start._i));
-          //   newEventMonth.end = new Date(end._i);
-          //   this.ucCalendar.fullCalendar('renderEvent', newEventMonth, true);
-          // } else
-          if (this.flag && view.name === 'agendaWeek') {
+          // Vue mois
+          if (this.flag && view.name === 'month') {
+            const newEventMonth = new EventModel('Souhait', new Date(start._i));
+            newEventMonth.end = new Date(end._i);
+            this.ucCalendar.fullCalendar('renderEvent', newEventMonth, true);
+          } else // Vue Semaine "agenda"
+            if (this.flag && view.name === 'agendaWeek') {
             const newEventWeek = new EventModel('Souhait', new Date(start._d));
             newEventWeek.end = new Date(end._d);
             // heure - 1 parceque decalage ???
@@ -88,41 +88,23 @@ export class CalendarPageComponent implements OnInit {
     });
   }
 
-  // Permet une action apres un clic d'ouvir la popup de suppression
+  // Permet une action après un clic sur un event (ici ouvir la popup de suppression)
   eventClick(model: any) {
     this.displayEvent = model;
     console.log(model);
-    this.showConfirm();  // https://github.com/ankosoftware/ng2-bootstrap-modal
+    this.showConfirm();
   }
 
-  // Permet la suppression d'un event après validation
+  // Permet la suppression d'un event après confirmation
   deleteEvent() {
     this.ucCalendar.fullCalendar('removeEvents', this.displayEvent.event._id);
+    // this.eventService.deleteEvent();
     this.ucCalendar.fullCalendar('refetchEvents');
   }
 
-  // clickButton(model: any) {
-  //   this.displayEvent = model;
-  // }
-  //
-  // updateEvent(model: any) {
-  //   model = {
-  //     event: {
-  //       id: model.event.id,
-  //       start: model.event.start,
-  //       end: model.event.end,
-  //       title: model.event.title
-  //       // other params
-  //     },
-  //     duration: {
-  //       _data: model.duration._data
-  //     }
-  //   };
-  //   this.displayEvent = model;
-  // }
-
+  // Gère la modal // https://github.com/ankosoftware/ng2-bootstrap-modal
   showConfirm() {
-    let disposable = this.dialogService.addDialog(ModalComponent, {
+    const disposable = this.dialogService.addDialog(ModalComponent, {
       title: 'Confirm title',
       message: 'Confirm message'})
       .subscribe(isConfirmed => {

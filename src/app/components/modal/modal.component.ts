@@ -6,7 +6,7 @@ export interface ConfirmModel {
   message: string;
 }
 @Component({
-  selector: 'confirm',
+  selector: 'app-confirm',
   template: `
     <div class="modal-dialog">
       <div class="modal-content">
