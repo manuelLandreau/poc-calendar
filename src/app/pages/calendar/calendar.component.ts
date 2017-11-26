@@ -68,17 +68,27 @@ export class CalendarPageComponent implements OnInit {
         select: (start, end, jsEvent, view) => {
           // Vue mois
           if (this.flag && view.name === 'month') {
-            const newEventMonth = new EventModel('Souhait', new Date(start._i));
+            const newEventMonth = new EventModel('choix', new Date(start._i));
             newEventMonth.end = new Date(end._i);
             this.ucCalendar.fullCalendar('renderEvent', newEventMonth, true);
           } else // Vue Semaine "agenda"
             if (this.flag && view.name === 'agendaWeek') {
-            const newEventWeek = new EventModel('Souhait', new Date(start._d));
+            const newEventWeek = new EventModel('choix', new Date(start._d));
             newEventWeek.end = new Date(end._d);
             // heure - 1 parceque decalage ???
             newEventWeek.start.setHours(newEventWeek.start.getHours() - 1);
             newEventWeek.end.setHours(newEventWeek.end.getHours() - 1);
             newEventWeek.color = '#09b0a2';
+            this.ucCalendar.fullCalendar('renderEvent', newEventWeek, true);
+            // this.eventService.addEvent();
+          }
+          if (this.flag && view.name === 'agendaWeek') {
+            const newEventWeek = new EventModel('imposé', new Date(start._d));
+            newEventWeek.end = new Date(end._d);
+            // heure - 1 parceque decalage ???
+            newEventWeek.start.setHours(newEventWeek.start.getHours() - 1);
+            newEventWeek.end.setHours(newEventWeek.end.getHours() - 1);
+            newEventWeek.color = '#d72840';
             this.ucCalendar.fullCalendar('renderEvent', newEventWeek, true);
             // this.eventService.addEvent();
           }
@@ -105,8 +115,8 @@ export class CalendarPageComponent implements OnInit {
   // Gère la modal // https://github.com/ankosoftware/ng2-bootstrap-modal
   showConfirm() {
     const disposable = this.dialogService.addDialog(ModalComponent, {
-      title: 'Confirm title',
-      message: 'Confirm message'})
+      title: 'Confirmation',
+      message: 'Voulez-vous supprimer votre souhait?'})
       .subscribe(isConfirmed => {
         // We get dialog result
         if (isConfirmed) {

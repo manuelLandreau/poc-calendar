@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div *ngIf="calendarOptions">
+<div *ngIf="calendarOptions" id="calendar">
   <ng-fullcalendar #ucCalendar
                    [options]="calendarOptions"
                    (eventClick)="eventClick($event.detail)">

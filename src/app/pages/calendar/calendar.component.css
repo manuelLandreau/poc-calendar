@@ -1,9 +1,13 @@
 .fc-toolbar.fc-header-toolbar {
-  background-color: #3d3d3d;
+  background-color: #3d3d3d; 
 }
 .fc-toolbar h2 {
   color: white;
-  font-family: Arial;
+  font-family: arial;
+  font-size: 20px;
+}
+.fc-header-toolbar {
+  min-height: 65px;
 }
 
 /* MODAL */
@@ -34,6 +38,7 @@
   position: relative;
   width: auto;
   margin: 10px;
+  margin-top: 50px; 
 }
 
 .modal.in .modal-dialog {
@@ -59,3 +64,13 @@
     margin: 30px auto;
   }
 }
+.alert-info {
+    background-color: #ece8e1;
+}
+
+.alert-info1 {
+  background-color: #f78b8b;
+}
+
+ 
+

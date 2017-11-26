@@ -1,5 +1,12 @@
 .navbar {
-  min-height: 35px;
+  min-height: 55px;
   box-shadow: 0;
-margin-bottom: 0;
+  margin-bottom: 0;
+  background-color: #ece8e1;
+}
+#retour {
+  color: black;
+}
+#favoris{
+  color: black;
 }
