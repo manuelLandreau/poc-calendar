@@ -64,12 +64,17 @@
     margin: 30px auto;
   }
 }
-.alert-info {
+.fc-day.fc-sun.fc-future{
     background-color: #ece8e1;
 }
 
-.alert-info1 {
-  background-color: #f78b8b;
+.alert-info{
+  background-color: white;
+}
+
+.fc-day-header.fc-tue.fc-today{
+  background-color: rgb(224, 32, 32);
+  border-radius: 10px;
 }
 
  

@@ -34,6 +34,8 @@ export class CalendarPageComponent implements OnInit {
         selectable: true, // permet la creation d'event
         themeSystem: 'bootstrap3', // pas de bootstrap 4 - choix: standard, bootstrap3, jquery-ui
         height: 'auto', // !important
+        locale: 'fr',
+        nowIndicator: true,
         // customButtons: { // Custom button
         //   back: {
         //     text: 'Retour',
@@ -41,19 +43,27 @@ export class CalendarPageComponent implements OnInit {
         //   }
         // },
         header: {
-          left: 'prev,next today',
+          left: 'prev,next',
           center: 'title',
-          right: 'month agendaWeek'
+          right: 'month agendaWeek today'
         },
         defaultView: 'agendaWeek',
         views: {
           agendaWeek: {
             eventLimit: 2,
-            titleFormat: 'MMMM YYYY'
+            titleFormat: 'MMMM YYYY',
+            slotDuration: '00:15:00',
+            slotLabelFormat:'H:mm',
           },
           day: {
             titleFormat: 'MMMM YYYY'
           }
+          
+        },
+        buttonText: {
+          today: 'Aujourd\'hui',
+          month: 'Mois',
+          week: 'Semaine'
         },
         // Active la vue "agenda day" après clic (d'où l'attribut flag)
         // dayClick: (date, allDay, jsEvent, view) => {
@@ -117,6 +127,7 @@ export class CalendarPageComponent implements OnInit {
     const disposable = this.dialogService.addDialog(ModalComponent, {
       title: 'Confirmation',
       message: 'Voulez-vous supprimer votre souhait?'})
+      
       .subscribe(isConfirmed => {
         // We get dialog result
         if (isConfirmed) {
