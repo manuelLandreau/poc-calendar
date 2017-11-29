@@ -53,12 +53,11 @@ export class CalendarPageComponent implements OnInit {
             eventLimit: 2,
             titleFormat: 'MMMM YYYY',
             slotDuration: '00:15:00',
-            slotLabelFormat:'H:mm',
+            slotLabelFormat: 'H:mm',
           },
           day: {
             titleFormat: 'MMMM YYYY'
           }
-          
         },
         buttonText: {
           today: 'Aujourd\'hui',
@@ -76,33 +75,38 @@ export class CalendarPageComponent implements OnInit {
         //   }
         // },
         select: (start, end, jsEvent, view) => {
+          let newEvent: EventModel;
           // Vue mois
           if (this.flag && view.name === 'month') {
-            const newEventMonth = new EventModel('choix', new Date(start._i));
-            newEventMonth.end = new Date(end._i);
-            this.ucCalendar.fullCalendar('renderEvent', newEventMonth, true);
+            newEvent = new EventModel('choix', new Date(start._i));
+            newEvent.end = new Date(end._i);
+            this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
           } else // Vue Semaine "agenda"
             if (this.flag && view.name === 'agendaWeek') {
-            const newEventWeek = new EventModel('choix', new Date(start._d));
-            newEventWeek.end = new Date(end._d);
+            newEvent = new EventModel('choix', new Date(start._d));
+            newEvent.end = new Date(end._d);
             // heure - 1 parceque decalage ???
-            newEventWeek.start.setHours(newEventWeek.start.getHours() - 1);
-            newEventWeek.end.setHours(newEventWeek.end.getHours() - 1);
-            newEventWeek.color = '#09b0a2';
-            this.ucCalendar.fullCalendar('renderEvent', newEventWeek, true);
+            newEvent.start.setHours(newEvent.start.getHours() - 1);
+            newEvent.end.setHours(newEvent.end.getHours() - 1);
+            newEvent.color = '#09b0a2';
+            this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
             // this.eventService.addEvent();
           }
+          // QUE VEUX TU DIRE ICI ? c'est exactement la même condition qu'au dessus
+          // et ça met 2 events en même temps, je te conseil de créer des faux events (rouge) dans la variable data du event.service.ts
           if (this.flag && view.name === 'agendaWeek') {
-            const newEventWeek = new EventModel('imposé', new Date(start._d));
-            newEventWeek.end = new Date(end._d);
+            newEvent = new EventModel('imposé', new Date(start._d));
+            newEvent.end = new Date(end._d);
             // heure - 1 parceque decalage ???
-            newEventWeek.start.setHours(newEventWeek.start.getHours() - 1);
-            newEventWeek.end.setHours(newEventWeek.end.getHours() - 1);
-            newEventWeek.color = '#d72840';
-            this.ucCalendar.fullCalendar('renderEvent', newEventWeek, true);
+            newEvent.start.setHours(newEvent.start.getHours() - 1);
+            newEvent.end.setHours(newEvent.end.getHours() - 1);
+            newEvent.color = '#d72840';
+            this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
             // this.eventService.addEvent();
           }
           this.flag = true;
+          /* ICI TU PEUX DECLENCHER UNE AUTRE MODAL */
+          this.showDateModal(newEvent);
         },
         events: data,
       };
@@ -112,7 +116,7 @@ export class CalendarPageComponent implements OnInit {
   // Permet une action après un clic sur un event (ici ouvir la popup de suppression)
   eventClick(model: any) {
     this.displayEvent = model;
-    this.showConfirm();
+    this.showConfirmRemove();
   }
 
   // Permet la suppression d'un event après confirmation
@@ -123,11 +127,10 @@ export class CalendarPageComponent implements OnInit {
   }
 
   // Gère la modal // https://github.com/ankosoftware/ng2-bootstrap-modal
-  showConfirm() {
+  showConfirmRemove() {
     const disposable = this.dialogService.addDialog(ModalComponent, {
       title: 'Confirmation',
       message: 'Voulez-vous supprimer votre souhait?'})
-      
       .subscribe(isConfirmed => {
         // We get dialog result
         if (isConfirmed) {
@@ -137,5 +140,25 @@ export class CalendarPageComponent implements OnInit {
     setTimeout(() => {
       disposable.unsubscribe();
     }, 10000);
+  }
+
+  // Gère la modal // https://github.com/ankosoftware/ng2-bootstrap-modal
+  showDateModal(event: EventModel) {
+    const disposable = this.dialogService.addDialog(ModalComponent, {
+      title: 'Reglage dates',
+      message: 'Reglez les dates'})
+      .subscribe(isConfirmed => {
+        // We get dialog result
+        if (isConfirmed) {
+          this.updateEvent(event);
+        }
+      });
+    setTimeout(() => {
+      disposable.unsubscribe();
+    }, 10000);
+  }
+
+  updateEvent(event: EventModel) {
+    // TODO ici il faudra mettre à jour l'évènement en question avec les nouvelles dates
   }
 }
