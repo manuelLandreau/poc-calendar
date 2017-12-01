@@ -1,8 +1,8 @@
 .fc-toolbar.fc-header-toolbar {
-  background-color: #3d3d3d; 
+  background-color: white; 
 }
 .fc-toolbar h2 {
-  color: white;
+  color:black;
   font-family: arial;
   font-size: 20px;
 }
@@ -64,18 +64,40 @@
     margin: 30px auto;
   }
 }
-.fc-day.fc-sun.fc-future{
+/* .fc-day.fc-sun.fc-future{
     background-color: #ece8e1;
+    
+  } */
+.fc-bg {
+  height:0;
+}
+.fc-row.fc-week.panel-default{
+  height:0;
+}
+
+.fc-agenda-view .fc-day-grid .fc-row {
+  min-height: 0em; 
 }
 
 .alert-info{
   background-color: white;
 }
 
-.fc-day-header.fc-tue.fc-today{
-  background-color: rgb(224, 32, 32);
-  border-radius: 10px;
+/* .fc-day-header.fc-today{
+  color: rgb(224, 32, 32);
+} */
+
+.fc-agenda-view .fc-day-grid .fc-row span{
+  color: transparent;
+} 
+
+.fc-day.fc-tue.fc-past{
+  border:0;
+}
+.table-bordered{
+  border: 0;
 }
 
+/* .fc-time-grid.fc-unselectable span */
  
 

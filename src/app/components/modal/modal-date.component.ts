@@ -16,8 +16,7 @@ export interface ConfirmModel {
         </div>
         <div class="modal-body">
           <p>{{message}}</p>
-          <input type="datetime-local">
-        </div>
+          </div>
         <div class="modal-footer">
         </div>
       </div>

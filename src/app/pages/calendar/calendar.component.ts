@@ -54,6 +54,8 @@ export class CalendarPageComponent implements OnInit {
             titleFormat: 'MMMM YYYY',
             slotDuration: '00:15:00',
             slotLabelFormat: 'H:mm',
+            minTime: '08:00:00',
+            maxTime: '20:00:00'
           },
           day: {
             titleFormat: 'MMMM YYYY'
@@ -139,7 +141,7 @@ export class CalendarPageComponent implements OnInit {
       });
     setTimeout(() => {
       disposable.unsubscribe();
-    }, 10000);
+    }, 100000);
   }
 
   // Gère la modal // https://github.com/ankosoftware/ng2-bootstrap-modal
@@ -155,10 +157,14 @@ export class CalendarPageComponent implements OnInit {
       });
     setTimeout(() => {
       disposable.unsubscribe();
-    }, 10000);
+    }, 100000);
   }
 
   updateEvent(event: EventModel) {
     // TODO ici il faudra mettre à jour l'évènement en question avec les nouvelles dates
+   event.start = new Date;
+   event.end = new Date;
+   this.ucCalendar.fullCalendar('updateEvent');
+
   }
 }
