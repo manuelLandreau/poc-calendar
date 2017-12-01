@@ -97,6 +97,9 @@
 .table-bordered{
   border: 0;
 }
+.table-bordered > thead > tr > th {
+  border: 0;
+}
 
 /* .fc-time-grid.fc-unselectable span */
  

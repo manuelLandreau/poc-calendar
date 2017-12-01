@@ -4,6 +4,7 @@
 form {
     border: 3px solid #304163;
     background-color: #304163;
+    background-image: url('../../../assets/img/splashscreen.png');
 }
 
 /* Full-width inputs */
@@ -15,14 +16,13 @@ input[type=text], input[type=password] {
     border: 2px solid white;
     box-sizing: border-box;
     border-radius: 24.8px;
-    background-color: #304163;
-    font-family: Nunito;
-    font-size: 18px;
+    background-color: transparent;
     }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color:    white;
-    font-family: Arial, Helvetica, sans-serif;
+    color:white;
+    font-family: Nunito;
+    font-size: 18px;
 }
 /* Set a style for all buttons */
 button {
