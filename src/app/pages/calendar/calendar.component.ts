@@ -45,17 +45,21 @@ export class CalendarPageComponent implements OnInit {
         header: {
           left: 'prev,next',
           center: 'title',
-          right: 'month agendaWeek today'
+          right :'',
+          // right: 'month agendaWeek today'
         },
         defaultView: 'agendaWeek',
         views: {
           agendaWeek: {
             eventLimit: 2,
-            titleFormat: 'MMMM YYYY',
+            titleFormat:  'DD MMMM YYYY',
             slotDuration: '00:15:00',
             slotLabelFormat: 'H:mm',
             minTime: '08:00:00',
-            maxTime: '20:00:00'
+            maxTime: '20:00:00',
+            allDaySlot: false,
+            columnFormat: 'ddd \n D',
+            dayNamesShort: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],   
           },
           day: {
             titleFormat: 'MMMM YYYY'
@@ -90,22 +94,22 @@ export class CalendarPageComponent implements OnInit {
             // heure - 1 parceque decalage ???
             newEvent.start.setHours(newEvent.start.getHours() - 1);
             newEvent.end.setHours(newEvent.end.getHours() - 1);
-            newEvent.color = '#09b0a2';
+            newEvent.color = '#e0e3ee';
             this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
             // this.eventService.addEvent();
           }
           // QUE VEUX TU DIRE ICI ? c'est exactement la même condition qu'au dessus
           // et ça met 2 events en même temps, je te conseil de créer des faux events (rouge) dans la variable data du event.service.ts
-          if (this.flag && view.name === 'agendaWeek') {
-            newEvent = new EventModel('imposé', new Date(start._d));
-            newEvent.end = new Date(end._d);
-            // heure - 1 parceque decalage ???
-            newEvent.start.setHours(newEvent.start.getHours() - 1);
-            newEvent.end.setHours(newEvent.end.getHours() - 1);
-            newEvent.color = '#d72840';
-            this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
+          // if (this.flag && view.name === 'agendaWeek') {
+          //   newEvent = new EventModel('imposé', new Date(start._d));
+          //   newEvent.end = new Date(end._d);
+          //   // heure - 1 parceque decalage ???
+          //   newEvent.start.setHours(newEvent.start.getHours() - 1);
+          //   newEvent.end.setHours(newEvent.end.getHours() - 1);
+          //   newEvent.color = '#d72840';
+          //   this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
             // this.eventService.addEvent();
-          }
+          // }
           this.flag = true;
           /* ICI TU PEUX DECLENCHER UNE AUTRE MODAL */
           this.showDateModal(newEvent);

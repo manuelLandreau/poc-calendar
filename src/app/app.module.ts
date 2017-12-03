@@ -12,6 +12,8 @@ import { CalendarPageComponent } from './pages/calendar/calendar.component';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {ModalComponent} from './components/modal/modal.component';
 import {ModalDateComponent} from "./components/modal/modal-date.component";
+import { monCompteComponent } from './pages/monCompte/monCompte.component';
+
 
 const appRoutes: Routes = [
   {
@@ -21,6 +23,10 @@ const appRoutes: Routes = [
   { path: 'calendar',
     component: CalendarPageComponent,
   },
+  {
+    path: 'monCompte',
+    component: monCompteComponent,
+},
 ];
 
 @NgModule({
@@ -38,7 +44,10 @@ const appRoutes: Routes = [
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    CalendarPageComponent
+    monCompteComponent,
+    CalendarPageComponent,
+    
+
   ],
   entryComponents: [
     ModalComponent,

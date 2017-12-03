@@ -2,9 +2,13 @@
   background-color: white; 
 }
 .fc-toolbar h2 {
-  color:black;
-  font-family: arial;
+  color: #28385e;
+  font-family: Nunito;
   font-size: 20px;
+  text-align: center;
+  font-weight: 800;
+  margin-top: 25px;
+
 }
 .fc-header-toolbar {
   min-height: 65px;
@@ -100,7 +104,33 @@
 .table-bordered > thead > tr > th {
   border: 0;
 }
+.glyphicon.glyphicon-chevron-right{
+  color:#28385e;
+  margin-top: 25px;
+  
+}
+.fc-next-button.btn.btn-default{
+  height: 0;
+}
+.glyphicon.glyphicon-chevron-left{
+  color:#28385e;
+  margin-top: 50px;
+  float: right;
+}
+.fc-prev-button.btn.btn-default{
+  height: 0;
+}
 
+.fc-row:first-child table {
+  box-shadow: 0 5px 15px -13px rgba(0,0,0,0.75);
+}
+
+.table-bordered > thead > tr > td {
+  border-bottom-width: 0;
+}
+.fc th::first-letter {
+  color: grey;
+}
 /* .fc-time-grid.fc-unselectable span */
  
 

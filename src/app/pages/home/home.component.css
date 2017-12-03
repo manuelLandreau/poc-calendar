@@ -21,7 +21,7 @@ input[type=text], input[type=password] {
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
     color:white;
-    font-family: Nunito;
+    font-family: 'Nunito', sans-serif;
     font-size: 18px;
 }
 /* Set a style for all buttons */
@@ -80,7 +80,7 @@ span.psw {
 .login{
    
    font-weight: bold;
-    font-family: Nunito;
+   font-family: 'Nunito', sans-serif;
     font-size: 15px;
     text-align: center;
     color: #304163;
