@@ -1,6 +1,8 @@
-<!-- <app-header></app-header> -->
+<button routerLink="/profile" class="btn btn-profile">
+  <span class="glyphicon glyphicon-user"></span>
+</button>
 
-<div *ngIf="calendarOptions" id="calendar">
+<div *ngIf="calendarOptions">
   <ng-fullcalendar #ucCalendar
                    [options]="calendarOptions"
                    (eventClick)="eventClick($event.detail)">

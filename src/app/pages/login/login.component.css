@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+
+* {
+  color: white;
+}
+
+/* Bordered form */
+form {
+  /*border: 3px solid #304163;*/
+  background: #304163 url('../../../assets/img/splashscreen.png');
+  height: 100vh;
+}
+
+/* Full-width inputs */
+input {
+  width: 100%;
+  padding: 10px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px solid white;
+  box-sizing: border-box;
+  border-radius: 28px;
+  background-color: transparent;
+}
+
+/* Extra style for the cancel button (red) */
+.btn-cancel {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the avatar image inside this container */
+.login-logo {
+  text-align: center;
+  padding: 90px 0 12px;
+}
+
+/* Avatar image */
+img.avatar {
+  width: 40%;
+  border-radius: 50%;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 16px;
+  height: 300px;
+
+}
+
+/* The "Forgot password" text */
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+.btn-login {
+  width: 100%;
+  font-weight: bold;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: #304163;
+  border-radius: 28px;
+  background-color: #ffffff;
+  margin: 8px 0;
+  padding: 12px 20px;
+}
+
+.btn-login:hover {
+  opacity: 0.8;
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+    display: block;
+    float: none;
+  }
+
+  .btn-cancel {
+    width: 100%;
+  }
+}

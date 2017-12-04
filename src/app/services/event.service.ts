@@ -16,15 +16,19 @@ export class EventService {
   data: any = [
     {
       title: 'Long Event',
-      start: getCurrentDate() + '-01',
-      end: getCurrentDate() + '-02'
+      start: new Date('2017-12-05T14:45:48'),
+      end: new Date('2017-12-06T14:00:48'),
+      color: '',
+      className: 'event-from-api'
     },
     {
       id: 999,
       title: 'Repeating Event',
-      start: getCurrentDate()
+      start: getCurrentDate(),
+      color: '',
+      className: 'event-from-api'
     }
-    ];
+  ];
 
   public getEvents(): Observable<any> {
     return Observable.of(this.data);

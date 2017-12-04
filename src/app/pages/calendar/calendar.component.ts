@@ -26,6 +26,8 @@ export class CalendarPageComponent implements OnInit {
   ngOnInit() {
     this.eventService.getEvents().subscribe(data => {
       this.calendarOptions = {
+        nowIndicator: false,
+        slotLabelInterval : '00:15',
         // Drag'n'drop & edition
         editable: true,
         selectLongPressDelay: 1,
@@ -35,19 +37,17 @@ export class CalendarPageComponent implements OnInit {
         themeSystem: 'bootstrap3', // pas de bootstrap 4 - choix: standard, bootstrap3, jquery-ui
         height: 'auto', // !important
         locale: 'fr',
-        nowIndicator: true,
-        // customButtons: { // Custom button
-        //   back: {
-        //     text: 'Retour',
-        //     click: () => this.ucCalendar.fullCalendar('changeView', 'month')
-        //   }
-        // },
+        themeButtonIcons: {
+          prev: 'glyphicon glyphicon-arrow-left',
+          next: 'glyphicon glyphicon-arrow-right',
+        },
         header: {
-          left: 'prev,next',
+          left: 'prev',
           center: 'title',
-          right: '', // 'month agendaWeek today'
+          right: 'next', // 'month agendaWeek today'
         },
         defaultView: 'agendaWeek',
+        dayNamesShort: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
         views: {
           agendaWeek: {
             eventLimit: 2,
@@ -58,7 +58,6 @@ export class CalendarPageComponent implements OnInit {
             maxTime: '20:00:00',
             allDaySlot: false,
             columnFormat: 'ddd \n D',
-            dayNamesShort: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
           },
           day: {
             titleFormat: 'MMMM YYYY'
@@ -93,7 +92,9 @@ export class CalendarPageComponent implements OnInit {
             // heure - 1 parceque decalage ???
             newEvent.start.setHours(newEvent.start.getHours() - 1);
             newEvent.end.setHours(newEvent.end.getHours() - 1);
-            newEvent.color = '#e0e3ee';
+            newEvent.color = '#97a0b1';
+            newEvent.className = 'event-souhait';
+            newEvent.overlap = true;
             this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
             // this.eventService.addEvent();
           }
@@ -101,7 +102,7 @@ export class CalendarPageComponent implements OnInit {
           /* ICI TU PEUX DECLENCHER UNE AUTRE MODAL */
           this.showDateModal(newEvent);
         },
-        events: data,
+        events: data
       };
     });
   }
