@@ -45,21 +45,20 @@ export class CalendarPageComponent implements OnInit {
         header: {
           left: 'prev,next',
           center: 'title',
-          right :'',
-          // right: 'month agendaWeek today'
+          right: '', // 'month agendaWeek today'
         },
         defaultView: 'agendaWeek',
         views: {
           agendaWeek: {
             eventLimit: 2,
-            titleFormat:  'DD MMMM YYYY',
+            titleFormat: 'DD MMMM YYYY',
             slotDuration: '00:15:00',
             slotLabelFormat: 'H:mm',
             minTime: '08:00:00',
             maxTime: '20:00:00',
             allDaySlot: false,
             columnFormat: 'ddd \n D',
-            dayNamesShort: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],   
+            dayNamesShort: ['L', 'M', 'M', 'J', 'V', 'S', 'D'],
           },
           day: {
             titleFormat: 'MMMM YYYY'
@@ -88,7 +87,7 @@ export class CalendarPageComponent implements OnInit {
             newEvent.end = new Date(end._i);
             this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
           } else // Vue Semaine "agenda"
-            if (this.flag && view.name === 'agendaWeek') {
+          if (this.flag && view.name === 'agendaWeek') {
             newEvent = new EventModel('choix', new Date(start._d));
             newEvent.end = new Date(end._d);
             // heure - 1 parceque decalage ???
@@ -98,18 +97,6 @@ export class CalendarPageComponent implements OnInit {
             this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
             // this.eventService.addEvent();
           }
-          // QUE VEUX TU DIRE ICI ? c'est exactement la même condition qu'au dessus
-          // et ça met 2 events en même temps, je te conseil de créer des faux events (rouge) dans la variable data du event.service.ts
-          // if (this.flag && view.name === 'agendaWeek') {
-          //   newEvent = new EventModel('imposé', new Date(start._d));
-          //   newEvent.end = new Date(end._d);
-          //   // heure - 1 parceque decalage ???
-          //   newEvent.start.setHours(newEvent.start.getHours() - 1);
-          //   newEvent.end.setHours(newEvent.end.getHours() - 1);
-          //   newEvent.color = '#d72840';
-          //   this.ucCalendar.fullCalendar('renderEvent', newEvent, true);
-            // this.eventService.addEvent();
-          // }
           this.flag = true;
           /* ICI TU PEUX DECLENCHER UNE AUTRE MODAL */
           this.showDateModal(newEvent);
@@ -136,7 +123,8 @@ export class CalendarPageComponent implements OnInit {
   showConfirmRemove() {
     const disposable = this.dialogService.addDialog(ModalComponent, {
       title: 'Confirmation',
-      message: 'Voulez-vous supprimer votre souhait?'})
+      message: 'Voulez-vous supprimer votre souhait?'
+    })
       .subscribe(isConfirmed => {
         // We get dialog result
         if (isConfirmed) {
@@ -152,7 +140,8 @@ export class CalendarPageComponent implements OnInit {
   showDateModal(event: EventModel) {
     const disposable = this.dialogService.addDialog(ModalComponent, {
       title: 'Reglage dates',
-      message: 'Reglez les dates'})
+      message: 'Reglez les dates'
+    })
       .subscribe(isConfirmed => {
         // We get dialog result
         if (isConfirmed) {
@@ -166,9 +155,8 @@ export class CalendarPageComponent implements OnInit {
 
   updateEvent(event: EventModel) {
     // TODO ici il faudra mettre à jour l'évènement en question avec les nouvelles dates
-   event.start = new Date;
-   event.end = new Date;
-   this.ucCalendar.fullCalendar('updateEvent');
-
+    event.start = new Date;
+    event.end = new Date;
+    this.ucCalendar.fullCalendar('updateEvent');
   }
 }

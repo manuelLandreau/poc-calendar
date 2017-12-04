@@ -41,7 +41,5 @@ export class EventService {
   public deleteEvent(event: EventModel): void {
     this.data.push(event.start); // todo
   }
-
-
 }
 
