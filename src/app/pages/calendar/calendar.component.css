@@ -1,8 +1,22 @@
+/* HEADER */
+/* Header fixed top */
+body {
+  margin-top: 109px;
+}
+
+.fc-center {
+  margin-top: 16px;
+}
+
 .fc-toolbar h2 {
-  color: #28385e;
+  color: #304163;
   font-size: 20px;
   font-weight: bold;
-  margin-top: 20px;
+  display: inline-block;
+}
+
+.fc table {
+  font-size: 1.1em;
 }
 
 .fc-bg {
@@ -11,9 +25,6 @@
 
 .fc-row.fc-week.panel-default {
   height: 0 !important;
-}
-body {
-  margin-top: 109px;
 }
 .fc-toolbar.fc-header-toolbar {
   position: fixed;
@@ -31,6 +42,8 @@ body {
   z-index: 3;
 }
 
+/* GRID */
+
 .table-bordered > tbody > tr > td {
   border-width: 2px;
   border-left: 0;
@@ -38,6 +51,7 @@ body {
 }
 
 .table-bordered > tbody > tr > td:first-child {
+  position: relative;
   border-width: 1px;
 }
 
@@ -152,6 +166,30 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
 }
 
 /* COLUMN */
+.fc-time-grid .fc-slats td:not(.fc-axis) {
+  background: repeating-linear-gradient(
+    to right,
+    #fff,
+    #fff 14%,
+    #f5f6fa 14%,
+    #f5f6fa 28%
+  );
+  background-position-x: 0;
+}
+
+.fc-event {
+  margin-left: 11px;
+  margin-right: -7px;
+}
+
+.fc-time-grid .fc-highlight {
+  left: 14px;
+  right: -7px;
+}
+
+.fc-content .fc-time, .fc-content .fc-title {
+  display: none;
+}
 
 .event-from-api {
   width: 5px;
@@ -162,19 +200,16 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
   left: 7px;
 }
 
-/* BUTTONS */
-.fc-toolbar .fc-right {
-  float: right;
-  right: 50px;
-  position: absolute;
-  top: 17px;
+.fc-time-grid .fc-bgevent {
+  left: 8px;
+  right: 0;
+  opacity: .8;
+  border-radius: 4px;
 }
 
-.fc-toolbar .fc-left {
-  float: right;
-  left: 50px;
-  position: absolute;
-  top: 17px;
+/* BUTTONS */
+.fc button {
+  margin-bottom: 6px;
 }
 
 .btn {
@@ -183,9 +218,9 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
 
 .btn-profile {
   position: fixed;
-  top: 13px;
-  right: 10px;
-  background-color: white;
+  top: 6px;
+  right: -4px;
+  background-color: transparent;
   color: #304163;
   z-index: 4;
 }
@@ -217,8 +252,7 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
 .modal-dialog {
   position: relative;
   width: auto;
-  margin: 10px;
-  margin-top: 50px;
+  margin: 50px 10px 10px;
 }
 
 .modal.in .modal-dialog {
