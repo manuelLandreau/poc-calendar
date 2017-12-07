@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h4 class="modal-title">Verifiez les horaires</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>Début</p>
+  <ngb-timepicker minuteStep="15" [(ngModel)]="start"></ngb-timepicker>
+  <p>Fin</p>
+  <ngb-timepicker minuteStep="15" [(ngModel)]="end"></ngb-timepicker>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-primary" (click)="confirm()">Valider</button>
+</div>

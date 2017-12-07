@@ -1,4 +1,4 @@
-import {EventModel} from './EventModel';
+import EventModel from './EventModel';
 
 export class EventSourceModel {
 

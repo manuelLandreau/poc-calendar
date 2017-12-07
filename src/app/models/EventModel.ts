@@ -1,4 +1,4 @@
-export class EventModel {
+export default class EventModel {
 
   constructor(title: string, start: Date) {
     this.title = title;

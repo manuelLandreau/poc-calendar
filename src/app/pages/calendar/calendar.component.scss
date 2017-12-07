@@ -1,31 +1,28 @@
 /* HEADER */
+
 /* Header fixed top */
 body {
-  margin-top: 109px;
+  margin: 115px 0 0 0 ;
 }
 
 .fc-center {
   margin-top: 16px;
 }
 
+  /*Date central*/
 .fc-toolbar h2 {
   color: #304163;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: larger;
+  font-weight: 800;
   display: inline-block;
 }
 
+/* Jour & num font size */
 .fc table {
-  font-size: 1.1em;
+  font-size: large;
 }
 
-.fc-bg {
-  height: 0 !important;
-}
-
-.fc-row.fc-week.panel-default {
-  height: 0 !important;
-}
+/* Header position fixed */
 .fc-toolbar.fc-header-toolbar {
   position: fixed;
   top: 0;
@@ -33,6 +30,10 @@ body {
   height: 60px;
   background-color: white;
   z-index: 3;
+}
+
+.fc th {
+  border-width: 0;
 }
 
 .fc-head-container {
@@ -44,35 +45,16 @@ body {
 
 /* GRID */
 
-.table-bordered > tbody > tr > td {
-  border-width: 2px;
-  border-left: 0;
-  border-right: 0;
-}
-
-.table-bordered > tbody > tr > td:first-child {
+.fc-slats tr {
   position: relative;
-  border-width: 1px;
+  height: 50px;
 }
 
 .fc td {
-  border-width: 0;
+  border-color: #e0e3ee;
 }
 
-.fc-time-grid .fc-slats .fc-minor td {
-  border-top-style: solid;
-}
-
-table.table-bordered tbody tr {
-  position: relative;
-  height: 58px;
-}
-
-.table-bordered > thead > tr > td {
-  border-left: 0;
-  border-right: 0;
-}
-
+/* Colonne des heures */
 tr td.fc-axis.fc-time {
   border: 0;
   background-color: #f5f6fa;
@@ -81,23 +63,22 @@ tr td.fc-axis.fc-time {
 
 tr td.fc-axis.fc-time span {
   position: relative;
-  z-index: 2;
+  top: -26px;
   width: 56px;
-  top: -30px;
+  z-index: 2;
 }
 
 tr[data-time$="00:00"] td.fc-axis.fc-time::before {
   content: '';
   position: absolute;
+  top: -29px;
   left: 4px;
-  width: 40px;
+  width: 48px;
+  height: 48px;
   background-color: white;
   border-radius: 50%;
-  padding: 10px 4px;
-  height: 28px;
-  z-index: 0;
-  top: -28px;
   border: 4px solid #304163;
+  z-index: 1;
 }
 
 tr[data-time$="45:00"] td.fc-time::before,
@@ -105,28 +86,40 @@ tr[data-time$="30:00"] td.fc-time::before,
 tr[data-time$="15:00"] td.fc-time::before {
   content: '';
   position: absolute;
-  left: 12px;
-  width: 33px;
+  top: -19px;
+  left: 15px;
+  width: 34px;
+  height: 35px;
   background-color: white;
   border-radius: 50%;
-  padding: 10px 4px;
-  height: 22px;
   z-index: 0;
-  top: -22px;
+}
+
+/* Ligne blanche heure */
+tr td.fc-axis.fc-time::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background: white;
+  left: 31px;
+  z-index: 0;
+  height: 100%;
+  top: 0;
 }
 
 tr[data-time$="45:00"] td.fc-time span,
 tr[data-time$="30:00"] td.fc-time span,
 tr[data-time$="15:00"] td.fc-time span {
+  top: -29px;
   font-size: x-small;
+  font-weight: 800;
   color: #304163;
-  font-weight: bold;
 }
 
 tr[data-time$="00:00"] td.fc-axis.fc-time span {
   font-size: medium;
+  font-weight: 800;
   color: #304163;
-  font-weight: bold;
 }
 
 tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-axis.fc-time span {
@@ -166,25 +159,16 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
 }
 
 /* COLUMN */
-.fc-time-grid .fc-slats td:not(.fc-axis) {
+/* Stripped Grid */
+.fc-slats td:not(.fc-time) {
   background: repeating-linear-gradient(
     to right,
     #fff,
-    #fff 14%,
-    #f5f6fa 14%,
-    #f5f6fa 28%
-  );
+    #fff 14.25%,
+    #f5f6fa 14.25%,
+    #f5f6fa 28.55%
+  ) !important;
   background-position-x: 0;
-}
-
-.fc-event {
-  margin-left: 11px;
-  margin-right: -7px;
-}
-
-.fc-time-grid .fc-highlight {
-  left: 14px;
-  right: -7px;
 }
 
 .fc-content .fc-time, .fc-content .fc-title {
@@ -197,28 +181,30 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
 }
 
 .event-souhait {
-  left: 7px;
+  margin-left: 5px;
+  margin-right: -2px;
+  border: 0;
 }
 
 .fc-time-grid .fc-bgevent {
-  left: 8px;
+  left: 1px;
   right: 0;
   opacity: .8;
   border-radius: 4px;
 }
 
 /* BUTTONS */
-.fc button {
-  margin-bottom: 6px;
-}
-
-.btn {
+.fc-state-default {
+  border: 0;
+  background: transparent none;
+  text-shadow: 0;
   box-shadow: none;
+  top: -2px;
 }
 
 .btn-profile {
   position: fixed;
-  top: 6px;
+  top: 8px;
   right: -4px;
   background-color: transparent;
   color: #304163;

@@ -1,17 +1,17 @@
 import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Options} from 'fullcalendar';
 import {EventService} from '../../services/event.service';
-import {EventModel} from '../../models/EventModel';
 import {CalendarComponent} from 'ng-fullcalendar';
-import {DialogService} from 'ng2-bootstrap-modal';
-import {ModalComponent} from '../../components/modal/modal.component';
 import datetimeDiff from 'datetime-diff';
-import {ModalDateComponent} from '../../components/modal/modal-date.component';
+import EventModel from '../../models/EventModel';
+import {EditModalComponent} from "../../components/edit-modal/edit-modal.component";
+import {DeleteModalComponent} from "../../components/delete-modal/delete-modal.component";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.css'],
+  styleUrls: ['./calendar.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class CalendarPageComponent implements OnInit {
@@ -23,7 +23,7 @@ export class CalendarPageComponent implements OnInit {
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
 
   constructor(protected eventService: EventService,
-              private dialogService: DialogService) {
+              private modalService: NgbModal) {
   }
 
   ngOnInit() {
@@ -50,7 +50,7 @@ export class CalendarPageComponent implements OnInit {
         selectable: true,
 
         // Pas de bootstrap 4 - choix: standard, bootstrap3, jquery-ui
-        themeSystem: 'bootstrap3',
+        themeSystem: 'standard',
         height: 'auto', // !important
         locale: 'fr',
 
@@ -67,7 +67,7 @@ export class CalendarPageComponent implements OnInit {
         views: {
           agendaWeek: {
             eventLimit: 2,
-            titleFormat: 'DD MMMM YYYY',
+            titleFormat: 'D MMM YYYY',
             slotDuration: '00:15:00',
             slotLabelFormat: 'H:mm',
             minTime: '08:00:00',
@@ -106,8 +106,8 @@ export class CalendarPageComponent implements OnInit {
             // API Post
             // this.eventService.addEvent();
 
-            // Déclenchement de la modal de reglage fin
-            this.showDateModal(newEvent);
+            // Déclenchement de la modal de validation heures
+            this.openModal(EditModalComponent, newEvent);
           }
         },
 
@@ -130,46 +130,26 @@ export class CalendarPageComponent implements OnInit {
   // Permet une action après un clic sur un event (ici ouvir la popup de suppression)
   eventClick(model: any) {
     this.displayEvent = model;
-    this.showConfirmRemove();
-  }
-
-  // Permet la suppression d'un event après confirmation
-  deleteEvent() {
-    this.ucCalendar.fullCalendar('removeEvents', this.displayEvent.event._id);
-    // this.eventService.deleteEvent();
-    this.ucCalendar.fullCalendar('refetchEvents');
-  }
-
-  // Gère la modal // https://github.com/ankosoftware/ng2-bootstrap-modal
-  showConfirmRemove() {
-    const disposable = this.dialogService.addDialog(ModalComponent, {
-      title: 'Confirmation',
-      message: 'Voulez-vous supprimer votre souhait?'
-    })
-      .subscribe(isConfirmed => {
-        // We get dialog result
-        if (isConfirmed) {
-          this.deleteEvent();
-        }
-      });
-    setTimeout(() => {
-      disposable.unsubscribe();
-    }, 100000);
-  }
-
-  // Gère la modal // https://github.com/ankosoftware/ng2-bootstrap-modal
-  showDateModal(event: EventModel) {
-    const disposable = this.dialogService.addDialog(ModalDateComponent, {event})
-      .subscribe(updatedEvent => this.ucCalendar.fullCalendar('renderEvent', updatedEvent, true));
-
-    setTimeout(() => {
-      disposable.unsubscribe();
-    }, 100000);
+    this.openModal(DeleteModalComponent);
   }
 
   calculateWeekHours(data: any) {
     const maper = data.map(event => {
       this.weekHours += datetimeDiff(event.start, event.end).hours;
+    });
+  }
+
+  openModal(modal, event = null) {
+    const modalRef = this.modalService.open(modal);
+    modalRef.componentInstance.event = event;
+    modalRef.result.then(result => {
+      if (event !== null) {
+        this.ucCalendar.fullCalendar('renderEvent', result, true)
+      } else {
+        this.ucCalendar.fullCalendar('removeEvents', this.displayEvent.event._id);
+        // this.eventService.deleteEvent();
+        this.ucCalendar.fullCalendar('refetchEvents');
+      }
     });
   }
 }
