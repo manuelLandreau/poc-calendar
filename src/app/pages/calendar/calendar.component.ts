@@ -150,6 +150,7 @@ export class CalendarPageComponent implements OnInit {
    * @param event: EventModel
    */
   eventClick(event: EventModel) {
+    console.log(event);
     this.openModal(DeleteModalComponent, event, 'delete');
   }
 
@@ -171,11 +172,10 @@ export class CalendarPageComponent implements OnInit {
     const modalRef = this.modalService.open(modal);
     modalRef.componentInstance.event = event;
     modalRef.result.then(result => {
-      console.log(event._id);
       if (type === 'edit') {
         this.ucCalendar.fullCalendar('renderEvent', result, true);
         this.eventService.addEvent(result);
-      } else {
+      } else if (type === 'delete') {
         this.ucCalendar.fullCalendar('removeEvents', event._id);
         this.eventService.deleteEvent(event);
       }
