@@ -5,23 +5,23 @@ export default class EventModel {
     this.start = start;
   }
 
-  id: string|number;
+  id: number;
   title: string;
-  allDay: boolean;
+  // allDay: boolean;
   start: Date;
   end: Date;
-  url: string;
+  // url: string;
   className: string|Array<any>;
   editable: boolean;
-  startEditable: boolean;
-  durationEditable: boolean;
-  resourceEditable: boolean;
+  // startEditable: boolean;
+  // durationEditable: boolean;
+  // resourceEditable: boolean;
   rendering: string; // "background", or "inverse-background"
-  overlap: boolean;
-  constraint: any;
-  source: any; // Event Source Object
+  // overlap: boolean;
+  // constraint: any;
+  // source: any; // Event Source Object
   color: string;
-  backgroundColor: string;
-  borderColor: string;
-  textColor: string;
+  // backgroundColor: string;
+  // borderColor: string;
+  // textColor: string;
 }

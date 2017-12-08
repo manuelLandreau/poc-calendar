@@ -2,12 +2,15 @@ import {Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Options} from 'fullcalendar';
 import {EventService} from '../../services/event.service';
 import {CalendarComponent} from 'ng-fullcalendar';
-import datetimeDiff from 'datetime-diff';
 import EventModel from '../../models/EventModel';
 import {EditModalComponent} from "../../components/edit-modal/edit-modal.component";
 import {DeleteModalComponent} from "../../components/delete-modal/delete-modal.component";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {RatioService} from "../../services/ratio.service";
 
+/**
+ * CalendarPageComponent
+ */
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -17,17 +20,23 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 export class CalendarPageComponent implements OnInit {
 
   calendarOptions: Options;
-  displayEvent: any;
-  weekHours: 0;
-  wishHours: 0;
+  totalHours: string;
+  currentHours: string;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
 
+  /**
+   * Contructor
+   * @param eventService
+   * @param modalService
+   * @param ratioService
+   */
   constructor(protected eventService: EventService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private ratioService: RatioService) {
   }
 
   ngOnInit() {
-    this.eventService.getEvents().subscribe(data => {
+    this.eventService.getEvents().subscribe((data: EventModel[]) => {
       this.calendarOptions = {
         // Cache l'indicateur de la date d'aujourd'hui
         nowIndicator: false,
@@ -49,7 +58,6 @@ export class CalendarPageComponent implements OnInit {
         // Permet la creation d'event
         selectable: true,
 
-        // Pas de bootstrap 4 - choix: standard, bootstrap3, jquery-ui
         themeSystem: 'standard',
         height: 'auto', // !important
         locale: 'fr',
@@ -103,21 +111,31 @@ export class CalendarPageComponent implements OnInit {
             newEvent.className = 'event-souhait';
             newEvent.editable = true;
 
-            // API Post
-            // this.eventService.addEvent();
-
             // Déclenchement de la modal de validation heures
-            this.openModal(EditModalComponent, newEvent);
+            this.openModal(EditModalComponent, newEvent, 'edit');
+            // Refresh Ratio
+            this.currentHours = this.ratioService.calculateCurrent(data);
           }
         },
 
         // Données du back/api/service
         events: data
       };
-      this.calculateWeekHours(data);
+      // Initialise le ratio heures semaine / heures souhaitées
+      this.refreshRatio(data)
     });
   }
 
+  refreshRatio(data) {
+    this.totalHours = this.ratioService.calculateTotal(data);
+    this.currentHours = this.ratioService.calculateCurrent(data);
+  }
+
+  /**
+   *
+   * @param date
+   * @param allDay
+   */
   switchDayView(date, allDay) {
     if (allDay) {
       const dayDate = new Date(date._i);
@@ -127,28 +145,39 @@ export class CalendarPageComponent implements OnInit {
     }
   }
 
-  // Permet une action après un clic sur un event (ici ouvir la popup de suppression)
-  eventClick(model: any) {
-    this.displayEvent = model;
-    this.openModal(DeleteModalComponent);
+  /**
+   * Permet une action après un clic sur un event (ici ouvir la popup de suppression)
+   * @param event: EventModel
+   */
+  eventClick(event: EventModel) {
+    this.openModal(DeleteModalComponent, event, 'delete');
   }
 
-  calculateWeekHours(data: any) {
-    const maper = data.map(event => {
-      this.weekHours += datetimeDiff(event.start, event.end).hours;
-    });
+  /**
+   *
+   * @param event
+   */
+  updateEvent(event: EventModel) {
+    this.eventService.updateEvent(event);
+    //this.ratioService.calculateCurrent()
   }
 
-  openModal(modal, event = null) {
+  /**
+   *
+   * @param modal
+   * @param event
+   */
+  openModal(modal, event, type): void {
     const modalRef = this.modalService.open(modal);
     modalRef.componentInstance.event = event;
     modalRef.result.then(result => {
-      if (event !== null) {
-        this.ucCalendar.fullCalendar('renderEvent', result, true)
+      console.log(event._id);
+      if (type === 'edit') {
+        this.ucCalendar.fullCalendar('renderEvent', result, true);
+        this.eventService.addEvent(result);
       } else {
-        this.ucCalendar.fullCalendar('removeEvents', this.displayEvent.event._id);
-        // this.eventService.deleteEvent();
-        this.ucCalendar.fullCalendar('refetchEvents');
+        this.ucCalendar.fullCalendar('removeEvents', event._id);
+        this.eventService.deleteEvent(event);
       }
     });
   }

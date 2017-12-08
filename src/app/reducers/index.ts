@@ -1,10 +1,10 @@
 import {eventReducer} from './event.reducer';
-import {modalReducer} from './modal.reducer';
+import {ratioReducer} from './ratio.reducer';
 import {routerReducer} from '@ngrx/router-store';
 
 const reducers = {
   router: routerReducer,
-  modal: modalReducer,
+  modal: ratioReducer,
   event: eventReducer,
 };
 

@@ -1,0 +1,26 @@
+.ratio {
+  width: 44px;
+  height: 44px;
+  padding-top: 6px;
+  border-radius: 50%;
+  background-color: #304163;
+}
+
+hr {
+  border-color: white;
+  width: 21px;
+  margin: 0;
+  padding: 0;
+}
+
+.ratio div {
+  text-align: center;
+  font-weight: 700;
+  font-size: small;
+  color: white;
+  line-height: 1.2em;
+}
+
+.ratio hr {
+  margin: 0 auto;
+}

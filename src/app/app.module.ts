@@ -5,7 +5,7 @@ import {FullCalendarModule} from 'ng-fullcalendar';
 import {AppComponent} from './components/app.component';
 import {EventService} from './services/event.service';
 import {LoginComponent} from './pages/login/login.component';
-import {RouterModule, Routes} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {CalendarPageComponent} from './pages/calendar/calendar.component';
 import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {ProfileComponent} from './pages/profile/profile.component';
@@ -16,25 +16,15 @@ import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {DeleteModalComponent} from './components/delete-modal/delete-modal.component';
 import {EditModalComponent} from './components/edit-modal/edit-modal.component';
-
-const appRoutes: Routes = [
-  {
-    path: '',
-    component: LoginComponent,
-  },
-  {
-    path: 'calendar',
-    component: CalendarPageComponent,
-  },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-  },
-];
+import { RatioComponent } from './components/ratio/ratio.component';
+import {HttpClientModule} from '@angular/common/http';
+import {appRoutes} from './routes';
+import {RatioService} from "./services/ratio.service";
 
 @NgModule({
   imports: [
     BrowserModule,
+    HttpClientModule,
     FormsModule,
     FullCalendarModule,
     NgbModule.forRoot(),
@@ -53,13 +43,17 @@ const appRoutes: Routes = [
     CalendarPageComponent,
     DeleteModalComponent,
     EditModalComponent,
+    RatioComponent,
   ],
   entryComponents: [
     DeleteModalComponent,
     EditModalComponent
   ],
   bootstrap: [AppComponent],
-  providers: [EventService]
+  providers: [
+    EventService,
+    RatioService
+  ]
 })
 
 export class AppModule {

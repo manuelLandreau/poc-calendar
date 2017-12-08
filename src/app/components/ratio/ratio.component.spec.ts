@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DeleteModalComponent } from './delete-modal.component';
+import { RatioComponent } from './ratio.component';
 
-describe('DeleteModalComponent', () => {
-  let component: DeleteModalComponent;
-  let fixture: ComponentFixture<DeleteModalComponent>;
+describe('RatioComponent', () => {
+  let component: RatioComponent;
+  let fixture: ComponentFixture<RatioComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DeleteModalComponent ]
+      declarations: [ RatioComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DeleteModalComponent);
+    fixture = TestBed.createComponent(RatioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -43,6 +43,13 @@ body {
   z-index: 3;
 }
 
+.ratio-position {
+  position: fixed;
+  top: 65px;
+  left: 10px;
+  z-index: 2;
+}
+
 /* GRID */
 
 .fc-slats tr {
@@ -181,7 +188,7 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
 }
 
 .event-souhait {
-  margin-left: 5px;
+  margin-left: 4px;
   margin-right: -2px;
   border: 0;
 }

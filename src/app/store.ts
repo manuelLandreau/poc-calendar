@@ -1,9 +1,9 @@
 import {RouterState} from '@angular/router';
-import {ModalState} from './reducers/modal.reducer';
+import {RatioState} from './reducers/ratio.reducer';
 import {EventState} from './reducers/event.reducer';
 
 export interface AppStore {
   router: RouterState;
-  modal: ModalState;
+  modal: RatioState;
   event: EventState;
 }
