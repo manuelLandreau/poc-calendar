@@ -1,4 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {AppState} from '../../store';
+import {Store} from '@ngrx/store';
+import * as RouterActions from '../../actions/router.action';
 
 /**
  *
@@ -10,10 +13,12 @@ import {Component, OnInit} from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() {
-  }
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
   }
 
+  goBack() {
+    this.store.dispatch(new RouterActions.Back());
+  }
 }

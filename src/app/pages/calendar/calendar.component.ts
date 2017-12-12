@@ -3,10 +3,16 @@ import {Options} from 'fullcalendar';
 import {EventService} from '../../services/event.service';
 import {CalendarComponent} from 'ng-fullcalendar';
 import EventModel from '../../models/EventModel';
-import {EditModalComponent} from "../../components/edit-modal/edit-modal.component";
-import {DeleteModalComponent} from "../../components/delete-modal/delete-modal.component";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {RatioService} from "../../services/ratio.service";
+import {EditModalComponent} from '../../components/edit-modal/edit-modal.component';
+import {DeleteModalComponent} from '../../components/delete-modal/delete-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RatioService} from '../../services/ratio.service';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../store';
+import {EventActions} from '../../actions/event.action';
+import * as RouterActions from '../../actions/router.action';
+import {RatioActions} from "../../actions/ratio.action";
+import {Observable} from "rxjs/Observable";
 
 /**
  * CalendarPageComponent
@@ -19,9 +25,9 @@ import {RatioService} from "../../services/ratio.service";
 })
 export class CalendarPageComponent implements OnInit {
 
-  calendarOptions: Options;
-  totalHours: string;
-  currentHours: string;
+  calendarOptions: Options = null;
+  totalHours: Observable<string>;
+  currentHours: Observable<string>;
   @ViewChild(CalendarComponent) ucCalendar: CalendarComponent;
 
   /**
@@ -29,106 +35,115 @@ export class CalendarPageComponent implements OnInit {
    * @param eventService
    * @param modalService
    * @param ratioService
+   * @param ratioActions
+   * @param eventActions
+   * @param store
    */
   constructor(protected eventService: EventService,
               private modalService: NgbModal,
-              private ratioService: RatioService) {
+              private ratioActions: RatioActions,
+              private eventActions: EventActions,
+              private store: Store<AppState>) {
+    // get all events dispache (ngrx)
+    this.store.dispatch(this.eventActions.loadEvents());
   }
 
   ngOnInit() {
-    this.eventService.getEvents().subscribe((data: EventModel[]) => {
+    this.store.select('event', 'eventList').subscribe(events => {
+      // Initialisation du ratio des heures
+      this.store.dispatch(this.ratioActions.loadTotalHours());
+      this.store.dispatch(this.ratioActions.loadCurrentHours());
+
+      // Configuration general cf. doc fullcalendar
       this.calendarOptions = {
-        // Cache l'indicateur de la date d'aujourd'hui
-        nowIndicator: false,
+       // Cache l'indicateur de la date d'aujourd'hui
+       nowIndicator: false,
 
-        eventOverlap: stillEvent => !stillEvent.editable,
-        selectOverlap: (stillEvent) => !stillEvent.editable,
+       eventOverlap: stillEvent => !stillEvent.editable,
+       selectOverlap: (stillEvent) => !stillEvent.editable,
 
-        // Interval de graduation de l'heure
-        slotLabelInterval: '00:15',
+       // Interval de graduation de l'heure
+       slotLabelInterval: '00:15',
 
-        // Drag'n'drop & edition
-        editable: true,
+       // Drag'n'drop & edition
+       editable: true,
 
-        // Reglage du rapport scroll/Draw event
-        selectLongPressDelay: 100,
-        eventLongPressDelay: 100,
-        longPressDelay: 1,
+       // Reglage du rapport scroll/Draw event
+       selectLongPressDelay: 100,
+       eventLongPressDelay: 100,
+       longPressDelay: 1,
 
-        // Permet la creation d'event
-        selectable: true,
+       // Permet la creation d'event
+       selectable: true,
 
-        themeSystem: 'standard',
-        height: 'auto', // !important
-        locale: 'fr',
+       themeSystem: 'standard',
+       height: 'auto', // !important
+       locale: 'fr',
 
-        header: {
-          left: '',
-          center: 'prev,title,next',
-          right: '', // 'month agendaWeek today'
-        },
+       header: {
+         left: '',
+         center: 'prev,title,next',
+         right: '', // 'month agendaWeek today'
+       },
 
-        defaultView: 'agendaWeek',
+       defaultView: 'agendaWeek',
 
-        dayNamesShort: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+       dayNamesShort: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
 
-        views: {
-          agendaWeek: {
-            eventLimit: 2,
-            titleFormat: 'D MMM YYYY',
-            slotDuration: '00:15:00',
-            slotLabelFormat: 'H:mm',
-            minTime: '08:00:00',
-            maxTime: '20:00:00',
-            allDaySlot: false,
-            columnFormat: 'ddd \n D',
-          },
-          day: {
-            titleFormat: 'MMMM YYYY'
-          }
-        },
+       views: {
+         agendaWeek: {
+           eventLimit: 2,
+           titleFormat: 'D MMM YYYY',
+           slotDuration: '00:15:00',
+           slotLabelFormat: 'H:mm',
+           minTime: '08:00:00',
+           maxTime: '20:00:00',
+           allDaySlot: false,
+           columnFormat: 'ddd \n D',
+         },
+         day: {
+           titleFormat: 'MMMM YYYY'
+         }
+       },
 
-        buttonText: {
-          today: 'Aujourd\'hui',
-          month: 'Mois',
-          week: 'Semaine'
-        },
+       buttonText: {
+         today: 'Aujourd\'hui',
+         month: 'Mois',
+         week: 'Semaine'
+       },
 
-        // Active la vue "agenda day"
-        // dayClick: this.switchDayView,
-        select: (start, end, jsEvent, view) => {
-          let newEvent: EventModel;
+       // Active la vue 'agenda day'
+       // dayClick: this.switchDayView,
+       select: (start, end, jsEvent, view) => {
+         let newEvent: EventModel;
 
-          if (view.name === 'agendaWeek') {
-            newEvent = new EventModel('choix', new Date(start._d));
-            newEvent.end = new Date(end._d);
+         if (view.name === 'agendaWeek') {
+           newEvent = new EventModel('choix', new Date(start._d));
+           newEvent.end = new Date(end._d);
 
-            // heure - 1 parceque decalage
-            newEvent.start.setHours(newEvent.start.getHours() - 1);
-            newEvent.end.setHours(newEvent.end.getHours() - 1);
+           // heure - 1 parceque decalage
+           newEvent.start.setHours(newEvent.start.getHours() - 1);
+           newEvent.end.setHours(newEvent.end.getHours() - 1);
 
-            newEvent.color = '#97a0b1';
-            newEvent.className = 'event-souhait';
-            newEvent.editable = true;
+           newEvent.color = '#97a0b1';
+           newEvent.className = 'event-souhait';
+           newEvent.editable = true;
 
-            // Déclenchement de la modal de validation heures
-            this.openModal(EditModalComponent, newEvent, 'edit');
-            // Refresh Ratio
-            this.currentHours = this.ratioService.calculateCurrent(data);
-          }
-        },
+           // Déclenchement de la modal de validation heures
+           this.openModal(EditModalComponent, newEvent, 'edit');
 
-        // Données du back/api/service
-        events: data
+           // Refresh Ratio
+           this.store.dispatch(this.ratioActions.loadCurrentHours());
+         }
+       },
+
+       // Données du back/api/service
+       events // ES6 Synthax
       };
       // Initialise le ratio heures semaine / heures souhaitées
-      this.refreshRatio(data)
+      this.totalHours = this.store.select('ratio', 'totalHours');
+      this.currentHours = this.store.select('ratio', 'currentHours');
     });
-  }
-
-  refreshRatio(data) {
-    this.totalHours = this.ratioService.calculateTotal(data);
-    this.currentHours = this.ratioService.calculateCurrent(data);
   }
 
   /**
@@ -180,5 +195,9 @@ export class CalendarPageComponent implements OnInit {
         this.eventService.deleteEvent(event);
       }
     });
+  }
+
+  goToProfile() {
+    this.store.dispatch(new RouterActions.Go({path: ['/profile']}));
   }
 }

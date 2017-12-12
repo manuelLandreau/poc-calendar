@@ -7,7 +7,6 @@ import {EventService} from './services/event.service';
 import {LoginComponent} from './pages/login/login.component';
 import {RouterModule} from '@angular/router';
 import {CalendarPageComponent} from './pages/calendar/calendar.component';
-import {BootstrapModalModule} from 'ng2-bootstrap-modal';
 import {ProfileComponent} from './pages/profile/profile.component';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {StoreModule} from '@ngrx/store';
@@ -20,6 +19,12 @@ import { RatioComponent } from './components/ratio/ratio.component';
 import {HttpClientModule} from '@angular/common/http';
 import {appRoutes} from './routes';
 import {RatioService} from "./services/ratio.service";
+import {EventActions} from "./actions/event.action";
+import {EventEffects} from "./effects/event.effect";
+import {EffectsModule} from "@ngrx/effects";
+import {RatioActions} from "./actions/ratio.action";
+import {RatioEffects} from "./effects/ratio.effect";
+import {RouterEffects} from "./effects/router.effect";
 
 @NgModule({
   imports: [
@@ -28,10 +33,14 @@ import {RatioService} from "./services/ratio.service";
     FormsModule,
     FullCalendarModule,
     NgbModule.forRoot(),
-    BootstrapModalModule,
     StoreModule.forRoot(reducers),
     RouterModule.forRoot(appRoutes),
     StoreRouterConnectingModule,
+    EffectsModule.forRoot([
+      EventEffects,
+      RatioEffects,
+      RouterEffects
+    ]),
     StoreDevtoolsModule.instrument({
       maxAge: 25
     })
@@ -52,7 +61,9 @@ import {RatioService} from "./services/ratio.service";
   bootstrap: [AppComponent],
   providers: [
     EventService,
-    RatioService
+    EventActions,
+    RatioService,
+    RatioActions
   ]
 })
 

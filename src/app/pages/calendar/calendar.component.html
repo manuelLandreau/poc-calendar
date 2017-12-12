@@ -1,14 +1,17 @@
-<button routerLink="/profile" class="btn btn-profile">
-  <img src="../../../assets/img/user.svg" width="30"/>
-</button>
+<div class="main">
+  <button (click)="goToProfile()" class="btn btn-profile">
+    <img src="../../../assets/img/user.svg" width="30"/>
+  </button>
 
-<app-ratio [totalHours]="totalHours" [currentHours]="currentHours" class="ratio-position"></app-ratio>
-
-<div *ngIf="calendarOptions">
-  <ng-fullcalendar #ucCalendar
-                   [options]="calendarOptions"
-                   (eventClick)="eventClick($event.detail.event)"
-                   (eventDrop)="updateEvent($event.detail.event)"
-                   (eventResize)="updateEvent($event.detail.event)">
-  </ng-fullcalendar>
+  <div *ngIf="totalHours && currentHours">
+    <app-ratio [totalHours]="totalHours|async" [currentHours]="currentHours|async" class="ratio-position"></app-ratio>
+  </div>
+  <div *ngIf="calendarOptions !== null">
+    <ng-fullcalendar #ucCalendar
+                     [options]="calendarOptions"
+                     (eventClick)="eventClick($event.detail.event)"
+                     (eventDrop)="updateEvent($event.detail.event)"
+                     (eventResize)="updateEvent($event.detail.event)">
+    </ng-fullcalendar>
+  </div>
 </div>

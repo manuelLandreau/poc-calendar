@@ -1,4 +1,127 @@
-.container{
+.container-fluid {
   background-color: #304163;
-  min-height: 800px;
+  height: 100%;
+  color: white;
+}
+
+.row-top {
+  height: 215px;
+  border-bottom: 1px solid grey;
+}
+
+.btn-back {
+  position: relative;
+  top: 20px;
+  left: 22px;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  font-size: xx-large;
+  color: white;
+  line-height: 0;
+}
+
+.circle-indicator {
+  position: absolute;
+  top: 57px;
+  left: 63px;
+  font-size: xx-large;
+}
+
+.circle-container {
+  position: relative;
+  top: 30px;
+  left: 30px;
+}
+
+.loader {
+  position: absolute;
+  width: 165px;
+}
+
+.progress {
+  // Color and stroke width
+  stroke: white;
+  stroke-width: 1.3px;
+
+  // Set dasharray and dashoffset equal the circumference
+  // change the dashoffset towards zero to animate
+  stroke-dasharray: 100;
+  stroke-dashoffset: 20;
+
+  // Rotate circle to start from the top
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+
+.progress-bg {
+  // Color and stroke width
+  stroke: grey;
+  stroke-width: 1.3px;
+
+  // Set dasharray and dashoffset equal the circumference
+  // change the dashoffset towards zero to animate
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+
+  // Rotate circle to start from the top
+  transform-origin: center;
+  transform: rotate(-90deg);
+}
+
+.card {
+  margin: 7px 30px;
+  width: 100%;
+  position: relative;
+  color: #304163;
+  font-weight: bold;
+  border-radius: 5px;
+  border: 0;
+  box-shadow: 0 2.5px 13.5px 0 rgba(0, 0, 0, 0.33);
+  overflow: hidden;
+}
+
+.card:last-child {
+  margin-bottom: 230px;
+}
+
+.card-body {
+  margin-left: 30px;
+}
+
+.inverted-corner {
+  position: absolute;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  top: -38px;
+  left: -38px;
+  background-color: #304163;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 0 20px 20px 0;
+  background-color: #304163;
+  color: white;
+  border-top: 1px solid grey;
+  box-shadow: -0px -2.5px 19px 0 rgba(0, 0, 0, 0.21);
+}
+
+footer p {
+  margin: 20px 30px 0;
+  font-size: small;
+  font-weight: bold;
+}
+
+footer button {
+  text-decoration: none;
+  font-size: x-small;
+  font-weight: bold;
+}
+
+footer svg {
+  margin-right: 5px;
 }
