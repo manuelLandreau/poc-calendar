@@ -2,18 +2,18 @@
 
 /* Header fixed top */
 .main {
-  margin: 115px 0 0 0 ;
+  margin: 115px 0 0 0;
 }
 
 .fc-center {
   margin-top: 16px;
 }
 
-  /*Date central*/
+/*Date central*/
 .fc-toolbar h2 {
   color: #304163;
   font-size: larger;
-  font-weight: 800;
+  font-weight: bold;
   display: inline-block;
 }
 
@@ -120,13 +120,13 @@ tr[data-time$="30:00"] td.fc-time span,
 tr[data-time$="15:00"] td.fc-time span {
   top: -29px;
   font-size: x-small;
-  font-weight: 800;
+  font-weight: bold;
   color: #304163;
 }
 
 tr[data-time$="00:00"] td.fc-axis.fc-time span {
   font-size: medium;
-  font-weight: 800;
+  font-weight: bold;
   color: #304163;
 }
 
@@ -158,7 +158,7 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
   border-bottom-width: 0;
 }
 
-.fc-head-container  {
+.fc-head-container {
   box-shadow: 0 5px 15px -13px rgba(0, 0, 0, 0.75);
 }
 
@@ -170,11 +170,11 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
 /* Stripped Grid */
 .fc-slats td:not(.fc-time) {
   background: repeating-linear-gradient(
-    to right,
-    #fff,
-    #fff 14.25%,
-    #f5f6fa 14.25%,
-    #f5f6fa 28.55%
+      to right,
+      #fff,
+      #fff 14.25%,
+      #f5f6fa 14.25%,
+      #f5f6fa 28.55%
   ) !important;
   background-position-x: 0;
 }
@@ -186,6 +186,20 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
 .event-from-api {
   width: 5px;
   margin-right: 0;
+}
+
+.event-from-api-valide {
+  position: relative;
+  margin-left: 4px;
+  margin-right: -2px;
+  border: 0;
+  background: url('./../../../assets/img/tick.svg') 50% 50% no-repeat;
+  background-size: 70%;
+}
+
+.event-from-api-valide::after svg {
+  width: 15px;
+  height: 15px;
 }
 
 .event-souhait {
@@ -219,58 +233,25 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
   z-index: 4;
 }
 
-/* MODAL */
-.modal {
+.persist-btn-group .btn {
   position: fixed;
-  top: 0;
+  bottom: -1px;
+  right: 50%;
+  width: 50%;
+  margin: 0;
+  padding: 20px;
+  color: #28385e;
+  font-size: small;
+  font-weight: bold;
+  border: 0;
+  border-top: 1px solid #f5f6fa;
+  border-radius: 0;
+  background-color: white;
+  z-index: 100;
+}
+
+.persist-btn-group .btn:first-child {
   right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1050;
-  overflow: hidden;
-  -webkit-overflow-scrolling: touch;
-  outline: 0;
+  border-left: 1px solid #f5f6fa;
 }
-
-.fade {
-  opacity: 0;
-  -webkit-transition: opacity .15s linear;
-  -o-transition: opacity .15s linear;
-  transition: opacity .15s linear;
-}
-
-.fade.in {
-  opacity: 1;
-}
-
-.modal-dialog {
-  position: relative;
-  width: auto;
-  margin: 50px 10px 10px;
-}
-
-.modal.in .modal-dialog {
-  -webkit-transform: translate(0, 0);
-  -ms-transform: translate(0, 0);
-  -o-transform: translate(0, 0);
-  transform: translate(0, 0);
-}
-
-.modal.fade .modal-dialog {
-  -webkit-transition: -webkit-transform .3s ease-out;
-  -o-transition: -o-transform .3s ease-out;
-  transition: transform .3s ease-out;
-  -webkit-transform: translate(0, -25%);
-  -ms-transform: translate(0, -25%);
-  -o-transform: translate(0, -25%);
-  transform: translate(0, -25%);
-}
-
-@media (min-width: 768px) {
-  .modal-dialog {
-    width: 600px;
-    margin: 30px auto;
-  }
-}
-
 

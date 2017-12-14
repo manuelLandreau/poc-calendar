@@ -2,6 +2,15 @@
   top: 140px;
 }
 
-.round {
+.modal-content {
+  border: 0;
+}
+
+.modal-header {
+  color: #cfd3e2;
+  border-color: #eff1f8;
+}
+
+.b-radius-50 {
   border-radius: 50%;
 }

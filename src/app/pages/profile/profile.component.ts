@@ -13,7 +13,8 @@ import * as RouterActions from '../../actions/router.action';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor(private store: Store<AppState>) {}
+  constructor(private store: Store<AppState>) {
+  }
 
   ngOnInit() {
   }

@@ -5,10 +5,18 @@
   </button>
 </div>
 <div class="modal-body">
-  <p>Début</p>
-  <ngb-timepicker minuteStep="15" [(ngModel)]="start"></ngb-timepicker>
-  <p>Fin</p>
-  <ngb-timepicker minuteStep="15" [(ngModel)]="end"></ngb-timepicker>
+  <div class="row align-items-center">
+    <div class="col">Début</div>
+    <div class="col">
+      <ngb-timepicker [minuteStep]="15" [(ngModel)]="start"></ngb-timepicker>
+    </div>
+  </div>
+  <div class="row align-items-center">
+    <div class="col">Fin</div>
+    <div class="col">
+      <ngb-timepicker [minuteStep]="15" [(ngModel)]="end"></ngb-timepicker>
+    </div>
+  </div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-primary" (click)="confirm()">Valider</button>

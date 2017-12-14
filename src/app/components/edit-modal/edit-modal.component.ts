@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import EventModel from "../../models/EventModel";
+import EventModel from '../../models/EventModel';
 
 @Component({
-  selector: 'edit-modal',
+  selector: 'app-edit-modal',
   templateUrl: './edit-modal.component.html'
 })
 export class EditModalComponent implements OnInit {
@@ -12,7 +12,8 @@ export class EditModalComponent implements OnInit {
   start = {hour: null, minute: null};
   end = {hour: null, minute: null};
 
-  constructor(public activeModal: NgbActiveModal) {}
+  constructor(public activeModal: NgbActiveModal) {
+  }
 
   confirm() {
     this.event.start.setHours(this.start.hour);

@@ -1,5 +1,5 @@
 import {ActionWithPayload} from '../models/ActionWithPayload';
-import {RatioActions} from "../actions/ratio.action";
+import {RatioActions} from '../actions/ratio.action';
 
 export interface RatioState {
   totalHours: string;
@@ -9,7 +9,7 @@ export interface RatioState {
 export function ratioReducer(state: RatioState = {
   totalHours: null,
   currentHours: null
-  }, action: ActionWithPayload) {
+}, action: ActionWithPayload) {
   switch (action.type) {
     case RatioActions.LOAD_TOTAL_HOURS:
       return {...state};
@@ -18,7 +18,6 @@ export function ratioReducer(state: RatioState = {
       return {...state};
 
     case RatioActions.SET_TOTAL_HOURS:
-      console.log(action.payload);
       return {...state, totalHours: action.payload};
 
     case RatioActions.SET_CURRENT_HOURS:

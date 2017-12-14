@@ -1,18 +1,18 @@
 import EventModel from '../models/EventModel';
 import {ActionWithPayload} from '../models/ActionWithPayload';
-import {EventActions} from "../actions/event.action";
+import {EventActions} from '../actions/event.action';
 
-export type EventState = {
-  eventList: EventModel[],
-  errors: any
-};
+export interface EventState {
+  eventList: EventModel[];
+  errors: any;
+}
 
 const initialState = {
   eventList: [],
   errors: null
 };
 
-export function eventReducer(state = initialState, action: ActionWithPayload) {
+export function eventReducer(state: EventState = initialState, action: ActionWithPayload) {
   switch (action.type) {
     case EventActions.LOAD_EVENTS:
       return {...state};

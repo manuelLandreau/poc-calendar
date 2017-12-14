@@ -6,6 +6,7 @@
   <div *ngIf="totalHours && currentHours">
     <app-ratio [totalHours]="totalHours|async" [currentHours]="currentHours|async" class="ratio-position"></app-ratio>
   </div>
+
   <div *ngIf="calendarOptions !== null">
     <ng-fullcalendar #ucCalendar
                      [options]="calendarOptions"
@@ -13,5 +14,10 @@
                      (eventDrop)="updateEvent($event.detail.event)"
                      (eventResize)="updateEvent($event.detail.event)">
     </ng-fullcalendar>
+  </div>
+
+  <div class="persist-btn-group">
+    <button class="btn btn-persist"><span class="text-uppercase">enregistrer</span></button>
+    <button class="btn btn-persist"><span class="text-uppercase">envoyer</span></button>
   </div>
 </div>

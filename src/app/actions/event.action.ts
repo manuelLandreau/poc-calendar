@@ -4,16 +4,24 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class EventActions {
 
-  constructor() {}
-
   static LOAD_EVENTS = 'LOAD_EVENTS';
+  static LOAD_EVENTS_SUCCESS = 'LOAD_EVENTS_SUCCESS';
+  static LOAD_EVENTS_FAILED = 'LOAD_EVENTS_FAILED';
+  static GET_EVENT = 'GET_EVENT';
+  static GET_EVENTS_SUCCESS = 'GET_EVENTS_SUCCESS';
+  static SAVE_EVENT = 'SAVE_EVENT';
+  static SAVE_EVENT_SUCCESS = 'SAVE_EVENT_SUCCESS';
+  static ADD_EVENT = 'ADD_EVENT';
+  static ADD_EVENT_SUCCESS = 'ADD_EVENT_SUCCESS';
+  static DELETE_EVENT = 'DELETE_EVENT';
+  static DELETE_EVENT_SUCCESS = 'DELETE_EVENT_SUCCESS';
+
   loadEvents(): ActionWithPayload {
     return {
       type: EventActions.LOAD_EVENTS
     };
   }
 
-  static LOAD_EVENTS_SUCCESS = 'LOAD_EVENTS_SUCCESS';
   loadEventsSuccess(events): ActionWithPayload {
     return {
       type: EventActions.LOAD_EVENTS_SUCCESS,
@@ -21,7 +29,6 @@ export class EventActions {
     };
   }
 
-  static LOAD_EVENTS_FAILED = 'LOAD_EVENTS_FAILED';
   loadEventsFailed(errors): ActionWithPayload {
     return {
       type: EventActions.LOAD_EVENTS_FAILED,
@@ -29,7 +36,6 @@ export class EventActions {
     };
   }
 
-  static GET_EVENT = 'GET_EVENT';
   getEvent(id): ActionWithPayload {
     return {
       type: EventActions.GET_EVENT,
@@ -37,7 +43,6 @@ export class EventActions {
     };
   }
 
-  static GET_EVENTS_SUCCESS = 'GET_EVENTS_SUCCESS';
   getEventsSuccess(event): ActionWithPayload {
     return {
       type: EventActions.GET_EVENTS_SUCCESS,
@@ -45,14 +50,6 @@ export class EventActions {
     };
   }
 
-  static RESET_BLANK_EVENT = 'RESET_BLANK_EVENT';
-  resetBlankEvent(): ActionWithPayload {
-    return {
-      type: EventActions.RESET_BLANK_EVENT
-    };
-  }
-
-  static SAVE_EVENT = 'SAVE_EVENT';
   saveEvent(event): ActionWithPayload {
     return {
       type: EventActions.SAVE_EVENT,
@@ -60,7 +57,6 @@ export class EventActions {
     };
   }
 
-  static SAVE_EVENT_SUCCESS = 'SAVE_EVENT_SUCCESS';
   saveEventSuccess(event): ActionWithPayload {
     return {
       type: EventActions.SAVE_EVENT_SUCCESS,
@@ -68,7 +64,6 @@ export class EventActions {
     };
   }
 
-  static ADD_EVENT = 'ADD_EVENT';
   addEvent(event): ActionWithPayload {
     return {
       type: EventActions.ADD_EVENT,
@@ -76,7 +71,6 @@ export class EventActions {
     };
   }
 
-  static ADD_EVENT_SUCCESS = 'ADD_EVENT_SUCCESS';
   addEventSuccess(event): ActionWithPayload {
     return {
       type: EventActions.ADD_EVENT_SUCCESS,
@@ -84,7 +78,6 @@ export class EventActions {
     };
   }
 
-  static DELETE_EVENT = 'DELETE_EVENT';
   deleteEvent(event): ActionWithPayload {
     return {
       type: EventActions.DELETE_EVENT,
@@ -92,7 +85,6 @@ export class EventActions {
     };
   }
 
-  static DELETE_EVENT_SUCCESS = 'DELETE_EVENT_SUCCESS';
   deleteEventSuccess(event): ActionWithPayload {
     return {
       type: EventActions.DELETE_EVENT_SUCCESS,

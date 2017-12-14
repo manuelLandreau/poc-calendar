@@ -10,5 +10,6 @@ export class RatioComponent {
   @Input() totalHours: number;
   @Input() currentHours: number;
 
-  constructor() { }
+  constructor() {
+  }
 }
