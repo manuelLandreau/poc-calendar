@@ -168,7 +168,7 @@ tr[data-time^="08:00"] td.fc-axis.fc-time::before, tr[data-time^="08:00"] td.fc-
 
 /* COLUMN */
 /* Stripped Grid */
-.fc-slats td:not(.fc-time) {
+.fc-agendaWeek-view .fc-slats td:not(.fc-time) {
   background: repeating-linear-gradient(
       to right,
       #fff,

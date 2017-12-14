@@ -15,8 +15,8 @@ export class EventService {
     {
       id: 1,
       title: '',
-      start: new Date('2017-12-11T08:30:00'),
-      end: new Date('2017-12-11T11:00:00'),
+      start: new Date('2017-12-11T08:00:00'),
+      end: new Date('2017-12-11T10:00:00'),
       color: '#ae3a68',
       className: 'event-from-api',
       rendering: 'background',
@@ -25,8 +25,8 @@ export class EventService {
     {
       id: 2,
       title: '',
-      start: new Date('2017-12-11T11:00:00'),
-      end: new Date('2017-12-11T13:00:00'),
+      start: new Date('2017-12-13T08:00:00'),
+      end: new Date('2017-12-13T13:00:00'),
       color: '#ff9d6c',
       className: 'event-from-api',
       rendering: 'background',
@@ -35,8 +35,8 @@ export class EventService {
     {
       id: 3,
       title: '',
-      start: new Date('2017-12-12T08:45:00'),
-      end: new Date('2017-12-12T10:45:00'),
+      start: new Date('2017-12-12T08:00:00'),
+      end: new Date('2017-12-12T09:30:00'),
       color: '#a4e8cb',
       className: 'event-from-api',
       rendering: 'background',
@@ -45,7 +45,7 @@ export class EventService {
     {
       id: 4,
       title: '',
-      start: new Date('2017-12-12T10:45:00'),
+      start: new Date('2017-12-12T09:30:00'),
       end: new Date('2017-12-12T12:30:00'),
       color: '#ff9d6c',
       className: 'event-from-api',
@@ -65,8 +65,8 @@ export class EventService {
     {
       id: 6,
       title: '',
-      start: new Date('2017-12-14T08:45:00'),
-      end: new Date('2017-12-14T10:45:00'),
+      start: new Date('2017-12-14T09:00:00'),
+      end: new Date('2017-12-14T10:15:00'),
       color: '#a4e8cb',
       className: 'event-from-api',
       rendering: 'background',
@@ -75,7 +75,7 @@ export class EventService {
     {
       id: 7,
       title: '',
-      start: new Date('2017-12-14T10:45:00'),
+      start: new Date('2017-12-14T10:15:00'),
       end: new Date('2017-12-14T12:30:00'),
       color: '#ff9d6c',
       className: 'event-from-api',
@@ -85,8 +85,8 @@ export class EventService {
     {
       id: 8,
       title: '',
-      start: new Date('2017-12-14T14:00:00'),
-      end: new Date('2017-12-14T18:00:00'),
+      start: new Date('2017-12-15T08:30:00'),
+      end: new Date('2017-12-15T18:00:00'),
       color: 'black',
       className: 'event-from-api',
       rendering: 'background',
@@ -95,8 +95,28 @@ export class EventService {
     {
       id: 9,
       title: '',
-      start: new Date('2017-12-14T08:45:00'),
-      end: new Date('2017-12-14T14:45:00'),
+      start: new Date('2017-12-12T08:00:00'),
+      end: new Date('2017-12-12T12:30:00'),
+      color: '#304163',
+      className: 'event-from-api-valide',
+      rendering: '',
+      editable: false
+    },
+    {
+      id: 10,
+      title: '',
+      start: new Date('2017-12-13T08:00:00'),
+      end: new Date('2017-12-13T12:30:00'),
+      color: '#304163',
+      className: 'event-from-api-valide',
+      rendering: '',
+      editable: false
+    },
+    {
+      id: 11,
+      title: '',
+      start: new Date('2017-12-15T08:30:00'),
+      end: new Date('2017-12-15T11:00:00'),
       color: '#304163',
       className: 'event-from-api-valide',
       rendering: '',

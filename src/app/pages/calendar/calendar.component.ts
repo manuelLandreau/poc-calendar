@@ -105,7 +105,8 @@ export class CalendarPageComponent implements OnInit {
             columnFormat: 'ddd \n D',
           },
           day: {
-            titleFormat: 'MMMM YYYY'
+            titleFormat: 'D MMM YYYY',
+            allDaySlot: false,
           }
         },
 
@@ -158,15 +159,11 @@ export class CalendarPageComponent implements OnInit {
   /**
    *
    * @param date
-   * @param allDay
    */
-  switchDayView(date, allDay) {
-    if (allDay) {
-      const dayDate = new Date(date._i);
-      // Clicked to the entire day
-      this.ucCalendar.fullCalendar('changeView', 'agendaDay'/* or 'basicDay' */);
-      this.ucCalendar.fullCalendar('gotoDate', dayDate.getFullYear(), dayDate.getMonth(), dayDate.getDate());
-    }
+  switchDayView(date) {
+    this.ucCalendar.fullCalendar('changeView', 'agendaDay'/* or 'basicDay' */);
+    this.ucCalendar.fullCalendar('gotoDate', date._i);
+
   }
 
   /**
@@ -194,17 +191,21 @@ export class CalendarPageComponent implements OnInit {
   openModal(modal, event, type): void {
     const modalRef = this.modalService.open(modal);
     modalRef.componentInstance.event = event;
-    modalRef.result.then(editedEvent => {
+    modalRef.result.then(result => {
       if (type === 'edit') {
-        this.ucCalendar.fullCalendar('renderEvent', editedEvent, true);
-        this.eventService.addEvent(editedEvent);
+        this.ucCalendar.fullCalendar('renderEvent', result, true);
+        this.eventService.addEvent(result);
         // Refresh Ratio
         this.store.dispatch(this.ratioActions.loadCurrentHours());
       } else if (type === 'delete') {
-        this.ucCalendar.fullCalendar('removeEvents', event._id);
-        this.eventService.deleteEvent(event);
-        // Refresh Ratio
-        this.store.dispatch(this.ratioActions.loadCurrentHours());
+        // if (result.start) {
+        //   this.switchDayView(result.start)
+        // } else if (!result) {
+          this.ucCalendar.fullCalendar('removeEvents', event._id);
+          this.eventService.deleteEvent(event);
+          // Refresh Ratio
+          this.store.dispatch(this.ratioActions.loadCurrentHours());
+        // }
       }
     });
   }
