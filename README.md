@@ -1,4 +1,4 @@
-###OUTDATED
+### OUTDATED
 
 Docs : https://fullcalendar.io/docs Attention à ne pas confondre avec la V1
 
